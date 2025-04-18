@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shortcut Control Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e0e0e0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">Loading...</h1>
+  <div id="controls" class="hidden">
+    <button onclick="runShortcut('Toggle Bluetooth')">Toggle Bluetooth</button>
+    <button onclick="runShortcut('Toggle WiFi')">Toggle WiFi</button>
+    <button onclick="runShortcut('Get IP Address')">Get IP Address</button>
+
+    <div class="status" id="bluetoothStatus"></div>
+    <div class="status" id="wifiStatus"></div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const validToken = 'f93a7c9b24e81d3a7f5b0c624e9ad5ef';
+
+    const bluetoothState = urlParams.get('bluetoothState');
+    const wifiState = urlParams.get('wifiState');
+
+    const title = document.getElementById('title');
+    const controls = document.getElementById('controls');
+    const bluetoothStatus = document.getElementById('bluetoothStatus');
+    const wifiStatus = document.getElementById('wifiStatus');
+
+    if (token !== validToken) {
+      title.textContent = "Please run this page from the shortcut.";
+    } else {
+      title.textContent = "Device Control Panel";
+      controls.classList.remove('hidden');
+
+      if (bluetoothState === 'on' || bluetoothState === 'off') {
+        bluetoothStatus.textContent = `Bluetooth is currently turned ${bluetoothState}.`;
+      }
+
+      if (wifiState === 'on' || wifiState === 'off') {
+        wifiStatus.textContent = `WiFi is currently turned ${wifiState}.`;
+      }
+    }
+
+    function runShortcut(name) {
+      const encodedName = encodeURIComponent(name);
+      window.location.href = `shortcuts://run-shortcut?name=${encodedName}`;
+    }
+  </script>
+</body>
+</html>
