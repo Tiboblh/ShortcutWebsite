@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shortcut Control Panel</title>
+  <title>Shortcut Device Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -33,9 +33,9 @@
 <body>
   <h1 id="title">Loading...</h1>
   <div id="controls" class="hidden">
-    <button onclick="runShortcut('Toggle Bluetooth')">Toggle Bluetooth</button>
-    <button onclick="runShortcut('Toggle WiFi')">Toggle WiFi</button>
-    <button onclick="runShortcut('Get IP Address')">Get IP Address</button>
+    <button onclick="runShortcut('toggleBluetooth')">Toggle Bluetooth</button>
+    <button onclick="runShortcut('toggleWifi')">Toggle WiFi</button>
+    <button onclick="runShortcut('getIP')">Get IP Address</button>
 
     <div class="status" id="bluetoothStatus"></div>
     <div class="status" id="wifiStatus"></div>
@@ -69,9 +69,10 @@
       }
     }
 
-    function runShortcut(name) {
-      const encodedName = encodeURIComponent(name);
-      window.location.href = `shortcuts://run-shortcut?name=${encodedName}`;
+    function runShortcut(inputValue) {
+      const shortcutName = encodeURIComponent("DevicePanel");
+      const input = encodeURIComponent(inputValue);
+      window.location.href = `shortcuts://run-shortcut?name=${shortcutName}&input=${input}`;
     }
   </script>
 </body>
